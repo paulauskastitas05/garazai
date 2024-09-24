@@ -1,6 +1,21 @@
+'use server'
+
 import mongoose, { Mongoose } from 'mongoose';
 
-const MONGODB_URI = process.env.MONGODB_URI as string;
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://admin:ADMIN@serverlessinstance0.mqpweuh.mongodb.net/?retryWrites=true&w=majority&appName=ServerlessInstance0';
+
+async function connectToDB() {
+  try {
+    await mongoose.connect(MONGODB_URI, {
+      appName: 'ServerlessInstance0' // Optional: if appName is required
+    });
+    console.log('Connected to MongoDB successfully');
+  } catch (error) {
+    console.error('Error connecting to MongoDB:', error);
+  }
+}
+
+connectToDB();
 
 if (!MONGODB_URI) {
   throw new Error('Please define the MONGODB_URI environment variable inside .env.local');

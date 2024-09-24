@@ -13,6 +13,7 @@
     "@heroicons/react": "^2.1.5",
     "auth": "^1.1.1",
     "bcryptjs": "^2.4.3",
+    "dotenv": "^16.4.5",
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.9.0",
     "mongoose": "^8.6.3",
@@ -23,6 +24,7 @@
     "next-connect": "^1.0.0",
     "react": "^18",
     "react-dom": "^18",
+    "vercel": "^28.20.0",
     "zod": "^3.23.8"
   },
   "devDependencies": {

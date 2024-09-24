@@ -77,7 +77,7 @@ export default function AdminDashboard() {
             </div>
           </div>
           <div className="grow">
-              <link href="../../api/loginAPI">Prisijungti</link>
+              Prisijungti
               Registracija
           </div>
         </div>
