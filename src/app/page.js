@@ -1,95 +1,206 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+'use client';
+
+import { useState, useEffect } from 'react';
+import Select from 'react-select';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
+import styles from './Home.module.css';
+
+const customSelectStyles = {
+  control: (provided, state) => ({
+    ...provided,
+    backgroundColor: '#003366',
+    borderColor: state.isFocused ? '#003366' : '#003366',
+    boxShadow: state.isFocused ? '0 0 0 1px #003366' : 'none',
+    '&:hover': {
+      borderColor: '#003366',
+    },
+    color: 'white',
+  }),
+  singleValue: (provided) => ({
+    ...provided,
+    color: 'white',
+  }),
+  placeholder: (provided) => ({
+    ...provided,
+    color: 'white',
+  }),
+  menu: (provided) => ({
+    ...provided,
+    backgroundColor: '#003366',
+  }),
+  option: (provided, state) => ({
+    ...provided,
+    backgroundColor: state.isSelected ? '#060a69' : '#003366',
+    color: 'white',
+    '&:hover': {
+      backgroundColor: '#004488',
+    },
+  }),
+  multiValue: (provided) => ({
+    ...provided,
+    backgroundColor: '#004488',
+    color: 'white',
+  }),
+  multiValueLabel: (provided) => ({
+    ...provided,
+    color: 'white',
+  }),
+  multiValueRemove: (provided) => ({
+    ...provided,
+    color: 'white',
+    '&:hover': {
+      backgroundColor: '#ff4444',
+      color: 'white',
+    },
+  }),
+};
 
 export default function Home() {
-  return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>src/app/page.js</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [garages, setGarages] = useState([]);
+  const [user, setUser] = useState(null);
+  const [selectedCity, setSelectedCity] = useState('');
+  const [selectedTools, setSelectedTools] = useState([]);
+  const [selectedImage, setSelectedImage] = useState(null);
 
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+
+    const fetchGarages = async () => {
+      try {
+        const response = await fetch('/api/garages');
+        const data = await response.json();
+        setGarages(data);
+      } catch (error) {
+        console.error('Klaida įkeliant garažus:', error);
+      }
+    };
+
+    fetchGarages();
+  }, []);
+
+  const availableTools = [
+    { value: 'Drill', label: 'Drill' },
+    { value: 'Hammer', label: 'Hammer' },
+    { value: 'Saw', label: 'Saw' },
+    { value: 'Wrench', label: 'Wrench' },
+    { value: 'Air Compressor', label: 'Air Compressor' },
+    { value: 'Ladder', label: 'Ladder' }
+  ];
+
+  const lithuanianCities = [
+    { value: 'Vilnius', label: 'Vilnius' },
+    { value: 'Kaunas', label: 'Kaunas' },
+    { value: 'Klaipėda', label: 'Klaipėda' },
+    { value: 'Šiauliai', label: 'Šiauliai' },
+    { value: 'Panevėžys', label: 'Panevėžys' },
+    { value: 'Alytus', label: 'Alytus' },
+    { value: 'Marijampolė', label: 'Marijampolė' },
+    { value: 'Mažeikiai', label: 'Mažeikiai' },
+    { value: 'Jonava', label: 'Jonava' },
+    { value: 'Utena', label: 'Utena' }
+  ];
+
+  const openImage = (img) => setSelectedImage(img);
+  const closeModal = () => setSelectedImage(null);
+
+  const filteredGarages = Array.isArray(garages) ? garages.filter((garage) => {
+    const cityMatch = selectedCity ? garage.city === selectedCity.value : true;
+    const garageTools = garage.tools ? JSON.parse(garage.tools) : [];
+    const toolsMatch = selectedTools.length > 0 ? selectedTools.every(tool => garageTools.includes(tool.value)) : true;
+    return cityMatch && toolsMatch;
+  }) : [];
+  
+
+  return (
+    <div>
+      <Header />
+
+      <div className={styles.container}>
+        <div className={styles.filterCard}>
+          <div className={styles.filterItem}>
+            <label>Pasirinkite miestą</label>
+            <Select
+              value={selectedCity}
+              onChange={setSelectedCity}
+              options={lithuanianCities}
+              placeholder="Ieškoti miesto"
+              isClearable
+              onInputChange={() => {}}
+              styles={customSelectStyles}
+              isSearchable
+              className={styles.filterDropdown}
             />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
+          </div>
+
+          <div className={styles.filterItem}>
+            <label>Pasirinkite įrankius</label>
+            <Select
+              isMulti
+              value={selectedTools}
+              onChange={setSelectedTools}
+              options={availableTools}
+              placeholder="Ieškoti įrankių"
+              isSearchable
+              styles={customSelectStyles}
+              closeMenuOnSelect={false}
+              className={styles.filterDropdown}
+            />
+          </div>
         </div>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
+
+        <div className={styles.garageList}>
+  {filteredGarages.map((garage) => {
+    const images = JSON.parse(garage.images || '[]');
+    const mainImage = images[0];
+    const stackedImages = images.slice(1, 4);
+
+    return (
+      <div key={garage.id} className={styles.garageItem}>
+        <div className={styles.imageSection}>
+          <img 
+            src={mainImage} 
+            alt={garage.name} 
+            className={styles.mainImage} 
+            onClick={() => openImage(mainImage)} 
           />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+
+          <div className={styles.stackedImages}>
+            {stackedImages.map((img, index) => (
+              <img 
+                key={index} 
+                src={img} 
+                alt={`Garage ${index + 1}`} 
+                className={styles.stackedImage} 
+                onClick={() => openImage(img)} 
+              />
+            ))}
+          </div>
+        </div>
+
+        <div className={styles.garageInfo}>
+          <h3>{garage.name}</h3>
+          <p>{garage.address}</p>
+          <p>Miestas: {garage.city}</p>
+          <p>Įrankiai: {garage.tools ? JSON.parse(garage.tools).join(', ') : 'Nėra įrankių'}</p>
+        </div>
+      </div>
+    );
+  })}
+</div>
+
+
+        {selectedImage && (
+          <div className={styles.modal} onClick={closeModal}>
+            <img src={selectedImage} alt="Padidinta" className={styles.modalImage} />
+          </div>
+        )}
+      </div>
+
+      <Footer />
     </div>
   );
 }

@@ -14,6 +14,7 @@
   },
   "dependencies": {
 <<<<<<< HEAD
+<<<<<<< HEAD
     "@auth/mongodb-adapter": "^3.5.0",
     "@heroicons/react": "^2.1.5",
     "auth": "^1.1.1",
@@ -44,9 +45,19 @@
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
 =======
+=======
+    "axios": "^1.7.7",
+    "bcrypt": "^5.1.1",
+    "bcryptjs": "^2.4.3",
+    "formidable": "^3.5.1",
+    "jsonwebtoken": "^9.0.2",
+    "jwt-decode": "^4.0.0",
+    "mysql2": "^3.11.3",
+    "next": "14.2.14",
+>>>>>>> 305c7c9 (ziurim ka turim)
     "react": "^18",
     "react-dom": "^18",
-    "next": "14.2.14"
+    "react-select": "^5.8.1"
   },
   "devDependencies": {
     "eslint": "^8",
