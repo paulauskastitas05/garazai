@@ -1,7 +1,0 @@
-{
-<<<<<<< HEAD
-  "extends": ["next/core-web-vitals", "next/typescript"]
-=======
-  "extends": "next/core-web-vitals"
->>>>>>> 52dab6d (Initial commit from Create Next App)
-}
