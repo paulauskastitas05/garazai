@@ -5,6 +5,8 @@ import Select from 'react-select';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import styles from './Home.module.css';
+import { availableTools } from '../data/tools';
+import { lithuanianCities } from '../data/cities';
 
 const customSelectStyles = {
   control: (provided, state) => ({
@@ -82,28 +84,6 @@ export default function Home() {
     fetchGarages();
   }, []);
 
-  const availableTools = [
-    { value: 'Drill', label: 'Drill' },
-    { value: 'Hammer', label: 'Hammer' },
-    { value: 'Saw', label: 'Saw' },
-    { value: 'Wrench', label: 'Wrench' },
-    { value: 'Air Compressor', label: 'Air Compressor' },
-    { value: 'Ladder', label: 'Ladder' }
-  ];
-
-  const lithuanianCities = [
-    { value: 'Vilnius', label: 'Vilnius' },
-    { value: 'Kaunas', label: 'Kaunas' },
-    { value: 'Klaipėda', label: 'Klaipėda' },
-    { value: 'Šiauliai', label: 'Šiauliai' },
-    { value: 'Panevėžys', label: 'Panevėžys' },
-    { value: 'Alytus', label: 'Alytus' },
-    { value: 'Marijampolė', label: 'Marijampolė' },
-    { value: 'Mažeikiai', label: 'Mažeikiai' },
-    { value: 'Jonava', label: 'Jonava' },
-    { value: 'Utena', label: 'Utena' }
-  ];
-
   const openImage = (img) => setSelectedImage(img);
   const closeModal = () => setSelectedImage(null);
 
@@ -124,16 +104,16 @@ export default function Home() {
           <div className={styles.filterItem}>
             <label>Pasirinkite miestą</label>
             <Select
-              value={selectedCity}
-              onChange={setSelectedCity}
-              options={lithuanianCities}
-              placeholder="Ieškoti miesto"
-              isClearable
-              onInputChange={() => {}}
-              styles={customSelectStyles}
-              isSearchable
-              className={styles.filterDropdown}
-            />
+  value={selectedCity}
+  onChange={setSelectedCity}
+  options={lithuanianCities} 
+  placeholder="Ieškoti miesto"
+  isClearable
+  onInputChange={() => {}}
+  styles={customSelectStyles}
+  isSearchable
+  className={styles.filterDropdown}
+/>
           </div>
 
           <div className={styles.filterItem}>

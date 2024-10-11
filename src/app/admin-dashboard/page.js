@@ -3,8 +3,10 @@
 import { useEffect, useState } from 'react';
 import Select from 'react-select';
 import Header from '../../components/Header';
-import Footer from '../../components/Footer'; 
+import Footer from '../../components/Footer';
 import styles from './AdminDashboard.module.css';
+import { availableTools } from '../../data/tools';
+import { lithuanianCities } from '../../data/cities';
 
 export default function AdminDashboard() {
   const [users, setUsers] = useState([]);
@@ -12,27 +14,6 @@ export default function AdminDashboard() {
   const [message, setMessage] = useState('');
   const [editingUserId, setEditingUserId] = useState(null);
   const [editingGarageId, setEditingGarageId] = useState(null);
-
-  const availableTools = [
-    { value: 'Grąžtas', label: 'Grąžtas' },
-    { value: 'Plaktukas', label: 'Plaktukas' },
-    { value: 'Pjūklas', label: 'Pjūklas' },
-    { value: 'Veržliaraktis', label: 'Veržliaraktis' },
-    { value: 'Oro kompresorius', label: 'Oro kompresorius' },
-  ];
-
-  const lithuanianCities = [
-    { value: 'Vilnius', label: 'Vilnius' },
-    { value: 'Kaunas', label: 'Kaunas' },
-    { value: 'Klaipėda', label: 'Klaipėda' },
-    { value: 'Šiauliai', label: 'Šiauliai' },
-    { value: 'Panevėžys', label: 'Panevėžys' },
-    { value: 'Alytus', label: 'Alytus' },
-    { value: 'Marijampolė', label: 'Marijampolė' },
-    { value: 'Mažeikiai', label: 'Mažeikiai' },
-    { value: 'Jonava', label: 'Jonava' },
-    { value: 'Utena', label: 'Utena' },
-  ];
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -99,19 +80,36 @@ export default function AdminDashboard() {
           name: garage.name,
           address: garage.address,
           city: garage.city,
-          tools: garage.tools,  // Ensure tools are an array
+          tools: garage.tools,
         }),
       });
-
       if (response.ok) {
         setEditingGarageId(null);
-        setMessage('Garage updated successfully');
+        setMessage('Garažas atnaujintas sėkmingai');
       } else {
-        setMessage('Failed to update garage');
+        setMessage('Nepavyko atnaujinti garažo');
       }
     } catch (error) {
-      setMessage('Failed to update garage');
-      console.error('Error updating garage:', error);
+      setMessage('Nepavyko atnaujinti garažo');
+      console.error('Nepavyko atnaujinti garažo:', error);
+    }
+  };
+
+  const handleDeleteGarage = async (id) => {
+    if (window.confirm('Ar tikrai norite ištrinti šį garažą?')) {
+      try {
+        const response = await fetch(`/api/garages/${id}`, {
+          method: 'DELETE',
+        });
+        if (response.ok) {
+          setGarages(garages.filter((garage) => garage.id !== id));
+          setMessage('Garažas ištrintas sėkmingai.');
+        } else {
+          setMessage('Nepavyko ištrinti garažo.');
+        }
+      } catch (error) {
+        setMessage('Klaida trinant garažą.');
+      }
     }
   };
 
@@ -149,9 +147,13 @@ export default function AdminDashboard() {
                       <input
                         type="text"
                         value={user.name}
-                        onChange={(e) => setUsers(
-                          users.map(u => u.id === user.id ? { ...u, name: e.target.value } : u)
-                        )}
+                        onChange={(e) =>
+                          setUsers(
+                            users.map((u) =>
+                              u.id === user.id ? { ...u, name: e.target.value } : u
+                            )
+                          )
+                        }
                       />
                     ) : (
                       user.name
@@ -163,7 +165,11 @@ export default function AdminDashboard() {
                       <select
                         value={user.role}
                         onChange={(e) =>
-                          setUsers(users.map((u) => (u.id === user.id ? { ...u, role: e.target.value } : u)))
+                          setUsers(
+                            users.map((u) =>
+                              u.id === user.id ? { ...u, role: e.target.value } : u
+                            )
+                          )
                         }
                       >
                         <option value="admin">admin</option>
@@ -208,7 +214,15 @@ export default function AdminDashboard() {
             ) : (
               garages.map((garage) => {
                 const images = JSON.parse(garage.images || '[]');
-                const garageTools = garage.tools ? JSON.parse(garage.tools) : []; // Parsing tools array
+                let garageTools = [];
+                try {
+                  garageTools =
+                    garage.tools && garage.tools !== 'null' && garage.tools !== ''
+                      ? JSON.parse(garage.tools)
+                      : [];
+                } catch (error) {
+                  console.error('Error parsing garage tools:', error);
+                }
 
                 return (
                   <tr key={garage.id}>
@@ -218,9 +232,13 @@ export default function AdminDashboard() {
                         <input
                           type="text"
                           value={garage.name}
-                          onChange={(e) => setGarages(
-                            garages.map(g => g.id === garage.id ? { ...g, name: e.target.value } : g)
-                          )}
+                          onChange={(e) =>
+                            setGarages(
+                              garages.map((g) =>
+                                g.id === garage.id ? { ...g, name: e.target.value } : g
+                              )
+                            )
+                          }
                         />
                       ) : (
                         garage.name
@@ -231,9 +249,13 @@ export default function AdminDashboard() {
                         <input
                           type="text"
                           value={garage.address}
-                          onChange={(e) => setGarages(
-                            garages.map(g => g.id === garage.id ? { ...g, address: e.target.value } : g)
-                          )}
+                          onChange={(e) =>
+                            setGarages(
+                              garages.map((g) =>
+                                g.id === garage.id ? { ...g, address: e.target.value } : g
+                              )
+                            )
+                          }
                         />
                       ) : (
                         garage.address
@@ -244,7 +266,11 @@ export default function AdminDashboard() {
                         <Select
                           value={{ value: garage.city, label: garage.city }}
                           onChange={(option) =>
-                            setGarages(garages.map(g => g.id === garage.id ? { ...g, city: option.value } : g))
+                            setGarages(
+                              garages.map((g) =>
+                                g.id === garage.id ? { ...g, city: option.value } : g
+                              )
+                            )
                           }
                           options={lithuanianCities}
                           placeholder="Pasirinkite miestą"
@@ -257,21 +283,31 @@ export default function AdminDashboard() {
                       {editingGarageId === garage.id ? (
                         <Select
                           isMulti
-                          value={garageTools.map(tool => ({ value: tool, label: tool }))}
-                          onChange={(selectedOptions) =>
+                          value={garageTools.map((tool) => ({
+                            value: tool,
+                            label: tool,
+                          }))}
+                          onChange={(selectedOptions) => {
+                            console.log('Selected tools:', selectedOptions);
+                            const selectedTools = selectedOptions
+                              ? selectedOptions.map((option) => option.value)
+                              : [];
                             setGarages(
-                              garages.map(g =>
+                              garages.map((g) =>
                                 g.id === garage.id
-                                  ? { ...g, tools: selectedOptions.map(option => option.value) }
+                                  ? { ...g, tools: JSON.stringify(selectedTools) }
                                   : g
                               )
-                            )
-                          }
+                            );
+                          }}
                           options={availableTools}
                           placeholder="Pasirinkite įrankius"
+                          closeMenuOnSelect={false}
                         />
+                      ) : garageTools.length > 0 ? (
+                        garageTools.join(', ')
                       ) : (
-                        garageTools.length > 0 ? garageTools.join(', ') : 'Įrankių nėra'
+                        'Įrankių nėra'
                       )}
                     </td>
                     <td>
@@ -288,9 +324,18 @@ export default function AdminDashboard() {
                     </td>
                     <td>
                       {editingGarageId === garage.id ? (
-                        <button onClick={() => handleSaveGarage(garage.id)}>Išsaugoti</button>
+                        <button onClick={() => handleSaveGarage(garage.id)}>
+                          Išsaugoti
+                        </button>
                       ) : (
-                        <button onClick={() => setEditingGarageId(garage.id)}>Redaguoti</button>
+                        <>
+                          <button onClick={() => setEditingGarageId(garage.id)}>
+                            Redaguoti
+                          </button>
+                          <button onClick={() => handleDeleteGarage(garage.id)}>
+                            Ištrinti
+                          </button>
+                        </>
                       )}
                     </td>
                   </tr>
