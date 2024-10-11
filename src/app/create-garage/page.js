@@ -6,19 +6,8 @@ import Select from 'react-select';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import styles from './CreateGarage.module.css';
-
-const availableCities = [
-  { value: 'Vilnius', label: 'Vilnius' },
-  { value: 'Kaunas', label: 'Kaunas' },
-  { value: 'Klaipėda', label: 'Klaipėda' },
-  { value: 'Šiauliai', label: 'Šiauliai' },
-  { value: 'Panevėžys', label: 'Panevėžys' },
-  { value: 'Alytus', label: 'Alytus' },
-  { value: 'Marijampolė', label: 'Marijampolė' },
-  { value: 'Mažeikiai', label: 'Mažeikiai' },
-  { value: 'Jonava', label: 'Jonava' },
-  { value: 'Utena', label: 'Utena' },
-];
+import { availableTools } from '../../data/tools';
+import { lithuanianCities } from '../../data/cities';
 
 export default function CreateGarage() {
   const [formData, setFormData] = useState({
@@ -30,15 +19,6 @@ export default function CreateGarage() {
   });
   const [message, setMessage] = useState('');
   const router = useRouter();
-
-  const availableTools = [
-    { value: 'Drill', label: 'Drill' },
-    { value: 'Hammer', label: 'Hammer' },
-    { value: 'Saw', label: 'Saw' },
-    { value: 'Wrench', label: 'Wrench' },
-    { value: 'Air Compressor', label: 'Air Compressor' },
-    { value: 'Ladder', label: 'Ladder' }
-  ];
 
   const handleInputChange = (e) => {
     setFormData({
@@ -120,10 +100,10 @@ export default function CreateGarage() {
 
           <h2>Pasirinkite miestą</h2>
           <Select
-            options={availableCities}
+            options={lithuanianCities}
             onChange={handleCityChange}
             placeholder="Pasirinkite miestą"
-            value={availableCities.find(city => city.value === formData.city)}
+            value={lithuanianCities.find(city => city.value === formData.city)}
           />
 
           <h2>Pasirinkite įrankius</h2>
