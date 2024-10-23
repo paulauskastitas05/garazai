@@ -12,17 +12,20 @@
     "axios": "^1.7.7",
     "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
-    "formidable": "^3.5.1",
+    "build": "^0.1.4",
+    "formidable": "^3.5.2",
     "jsonwebtoken": "^9.0.2",
     "jwt-decode": "^4.0.0",
+    "lint": "^0.8.19",
     "mysql2": "^3.11.3",
-    "next": "14.2.14",
-    "react": "^18",
-    "react-dom": "^18",
-    "react-select": "^5.8.1"
+    "next": "^14.2.14",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-select": "^5.8.1",
+    "start": "^5.1.0"
   },
   "devDependencies": {
-    "eslint": "^8",
-    "eslint-config-next": "14.2.14"
+    "eslint": "^8.57.1",
+    "eslint-config-next": "^14.2.14"
   }
 }
