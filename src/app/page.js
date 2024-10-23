@@ -7,7 +7,8 @@ import Footer from '../components/Footer';
 import styles from './Home.module.css';
 import { availableTools } from '../data/tools';
 import { lithuanianCities } from '../data/cities';
-import LiveChat from './LiveChat';  // Adjust the path if needed
+import LiveChat from './LiveChat'; 
+import Link from 'next/link';
 
 const customSelectStyles = {
   control: (provided, state) => ({
@@ -148,7 +149,6 @@ export default function Home() {
             className={styles.mainImage} 
             onClick={() => openImage(mainImage)} 
           />
-
           <div className={styles.stackedImages}>
             {stackedImages.map((img, index) => (
               <img 
@@ -163,7 +163,10 @@ export default function Home() {
         </div>
 
         <div className={styles.garageInfo}>
-          <h3>{garage.name}</h3>
+          {/* Wrap garage.name in a Link component */}
+          <Link href={`/garages/${garage.id}`}>
+            <h3 className={styles.garageName} style={{ cursor: 'pointer' }}>{garage.name}</h3>
+          </Link>
           <p>{garage.address}</p>
           <p>Miestas: {garage.city}</p>
           <p>Įrankiai: {garage.tools ? JSON.parse(garage.tools).join(', ') : 'Nėra įrankių'}</p>
@@ -172,7 +175,6 @@ export default function Home() {
     );
   })}
 </div>
-
 
         {selectedImage && (
           <div className={styles.modal} onClick={closeModal}>
