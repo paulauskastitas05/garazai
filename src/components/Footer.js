@@ -1,4 +1,5 @@
 import styles from './Footer.module.css';
+import HomePage from './titulinis';
 import Link from 'next/link';
 
 export default function Footer() {
@@ -11,7 +12,7 @@ export default function Footer() {
         <tr className={styles.footerLink}>
           <Link href="/login">Prisijungti </Link> 
           <Link href="/register"> Registruotis</Link>
-          <Link href="/titulinis">titulinis</Link>
+          <Link href="/homepage">titulinis</Link>
         </tr>
       </table>
     </footer>

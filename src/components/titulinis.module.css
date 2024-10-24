@@ -1,0 +1,87 @@
+.homePage {
+    font-family: Arial, sans-serif;
+    color: #333;
+  }
+  
+  .hero {
+    background-color: #1E3A8A;
+    color: white;
+    padding: 80px 0;
+    text-align: center;
+  }
+  
+  .heroContent h1 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+  }
+  
+  .ctaButtons {
+    margin-top: 20px;
+  }
+  
+  .ctaButton, .ctaButtonSecondary {
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    color: white;
+    background-color: #2563EB;
+    margin-right: 15px;
+  }
+  
+  .ctaButtonSecondary {
+    background-color: #60A5FA;
+  }
+  
+  .features, .featuresLandlords, .howItWorks, .callToAction {
+    padding: 60px 20px;
+    text-align: center;
+  }
+  
+  .features h2, .featuresLandlords h2, .howItWorks h2, .callToAction h2 {
+    margin-bottom: 40px;
+    font-size: 2em;
+  }
+  
+  .featureItems {
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  .featureItem {
+    width: 30%;
+    text-align: center;
+  }
+  
+  .featureItem img {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 20px;
+  }
+  
+  .steps {
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  .step {
+    width: 40%;
+    text-align: left;
+  }
+  
+  .callToAction {
+    background-color: #2563EB;
+    color: white;
+  }
+  
+  .ctaButtons a {
+    display: inline-block;
+    margin-top: 20px;
+  }
+  
+  .footer {
+    background-color: #1E3A8A;
+    color: white;
+    text-align: center;
+    padding: 40px 0;
+  }
+  
