@@ -1,11 +1,11 @@
-
 .footer {
-    background-color: rgba(45, 101, 179, 255);
-    color: white;
-    text-align: center;
-    padding: 10px 0;
-    height: 50px;
-    width: 100%;
-    font-size: 14px;
-  }
-  
+  background-color: #2D65B3;
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+  width: 100%;
+  font-size: 14px;
+  font-family: 'YourPreferredFont', sans-serif;
+  position: relative;
+  bottom: 0;
+}
