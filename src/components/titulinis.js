@@ -11,10 +11,10 @@ const HomePage = () => {
           <h1>Raskite arba išnuomokite garažą per kelias minutes!</h1>
           <p>Platus garažų pasirinkimas nuomininkams. Paprastas procesas nuomotojams.</p>
           <div className={styles.ctaButtons}>
-            <Link href="/search" className={styles.ctaButton}>
+            <Link href="/paieska" className={styles.ctaButton}>
               Ieškoti garažų
             </Link>
-            <Link href="/list-garage" className={styles.ctaButtonSecondary}>
+            <Link href="/create-garage" className={styles.ctaButtonSecondary}>
               Patalpinti garažą
             </Link>
           </div>
