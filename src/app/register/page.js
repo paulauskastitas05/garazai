@@ -7,15 +7,20 @@ import Footer from '../../components/Footer';
 import styles from '../login/LoginRegister.module.css'; 
 
 export default function Register() {
-  const [formData, setFormData] = useState({ name: '', email: '', password: '' });
+  const [formData, setFormData] = useState({ name: '', email: '', password: '', phone: '' });
   const [message, setMessage] = useState('');
   const router = useRouter();
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    const { name, value } = e.target;
+
+    // Only allow numbers in the phone input
+    if (name === 'phone') {
+      const formattedValue = value.replace(/\D/g, ''); // Remove non-numeric characters
+      setFormData((prev) => ({ ...prev, phone: formattedValue }));
+    } else {
+      setFormData((prev) => ({ ...prev, [name]: value }));
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -86,6 +91,19 @@ export default function Register() {
                 name="password"
                 placeholder="Įveskite savo slaptažodį"
                 value={formData.password}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className={styles.formInput}>
+              <span className={styles.formInputIcon}>
+                <i className="fa fa-phone"></i>
+              </span>
+              <input
+                type="text"
+                name="phone"
+                placeholder="Įveskite savo telefono numerį"
+                value={formData.phone}
                 onChange={handleChange}
                 required
               />

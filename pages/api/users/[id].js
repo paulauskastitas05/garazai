@@ -3,13 +3,24 @@ import pool from '../../../lib/db';
 export default async function handler(req, res) {
   const { id } = req.query;
 
-  if (req.method === 'PUT') {
-    const { name, role } = req.body;
+  if (req.method === 'GET') {
+    try {
+      const [user] = await pool.query('SELECT id, name, email, phone, role FROM users WHERE id = ?', [id]);
 
-    console.log('Updating user with ID:', id, 'New Name:', name, 'New Role:', role);
+      if (!user || user.length === 0) {
+        return res.status(404).json({ message: 'Vartotojas nerastas' });
+      }
+
+      return res.status(200).json(user[0]);
+    } catch (error) {
+      console.error('Klaida gaunant vartotojo duomenis:', error);
+      return res.status(500).json({ message: 'Nepavyko gauti vartotojo duomenų' });
+    }
+  } else if (req.method === 'PUT') {
+    const { name, phone, role } = req.body;
 
     try {
-      const result = await pool.query('UPDATE users SET name = ?, role = ? WHERE id = ?', [name, role, id]);
+      const result = await pool.query('UPDATE users SET name = ?, phone = ?, role = ? WHERE id = ?', [name, phone, role, id]);
 
       if (result.affectedRows === 0) {
         return res.status(404).json({ message: 'Vartotojas nerastas' });

@@ -56,7 +56,7 @@ export default function AdminDashboard() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ name: user.name, role: user.role }),
+        body: JSON.stringify({ name: user.name, role: user.role, phone: user.phone }), // Include phone here
       });
       if (response.ok) {
         setEditingUserId(null);
@@ -81,6 +81,7 @@ export default function AdminDashboard() {
           address: garage.address,
           city: garage.city,
           tools: garage.tools,
+          ownerId: garage.ownerId, // Include ownerId here
         }),
       });
       if (response.ok) {
@@ -122,6 +123,7 @@ export default function AdminDashboard() {
 
         {message && <p className={styles.errorMessage}>{message}</p>}
 
+        {/* Users Table */}
         <h2 className={styles.headingSecondary}>Vartotojai</h2>
         <table className={styles.table}>
           <thead>
@@ -129,6 +131,7 @@ export default function AdminDashboard() {
               <th>ID</th>
               <th>Vardas</th>
               <th>Email</th>
+              <th>Telefono nr.</th>
               <th>Rolė</th>
               <th>Veiksmai</th>
             </tr>
@@ -136,7 +139,7 @@ export default function AdminDashboard() {
           <tbody>
             {users.length === 0 ? (
               <tr>
-                <td colSpan="5">Nėra vartotojų</td>
+                <td colSpan="6">Nėra vartotojų</td>
               </tr>
             ) : (
               users.map((user) => (
@@ -160,6 +163,23 @@ export default function AdminDashboard() {
                     )}
                   </td>
                   <td>{user.email}</td>
+                  <td>
+                    {editingUserId === user.id ? (
+                      <input
+                        type="text"
+                        value={user.phone}
+                        onChange={(e) =>
+                          setUsers(
+                            users.map((u) =>
+                              u.id === user.id ? { ...u, phone: e.target.value } : u
+                            )
+                          )
+                        }
+                      />
+                    ) : (
+                      user.phone || 'Nėra telefono'
+                    )}
+                  </td>
                   <td>
                     {editingUserId === user.id ? (
                       <select
@@ -193,6 +213,7 @@ export default function AdminDashboard() {
           </tbody>
         </table>
 
+        {/* Garages Table */}
         <h2 className={styles.headingSecondary}>Garažai</h2>
         <table className={styles.table}>
           <thead>
@@ -202,6 +223,7 @@ export default function AdminDashboard() {
               <th>Adresas</th>
               <th>Miestas</th>
               <th>Įrankiai</th>
+              <th>Savininko ID</th>
               <th>Nuotraukos</th>
               <th>Veiksmai</th>
             </tr>
@@ -209,7 +231,7 @@ export default function AdminDashboard() {
           <tbody>
             {garages.length === 0 ? (
               <tr>
-                <td colSpan="7">Nėra garažų</td>
+                <td colSpan="8">Nėra garažų</td>
               </tr>
             ) : (
               garages.map((garage) => {
@@ -288,7 +310,6 @@ export default function AdminDashboard() {
                             label: tool,
                           }))}
                           onChange={(selectedOptions) => {
-                            console.log('Selected tools:', selectedOptions);
                             const selectedTools = selectedOptions
                               ? selectedOptions.map((option) => option.value)
                               : [];
@@ -311,6 +332,23 @@ export default function AdminDashboard() {
                       )}
                     </td>
                     <td>
+                      {editingGarageId === garage.id ? (
+                        <input
+                          type="number"
+                          value={garage.ownerId || ''}
+                          onChange={(e) =>
+                            setGarages(
+                              garages.map((g) =>
+                                g.id === garage.id ? { ...g, ownerId: e.target.value } : g
+                              )
+                            )
+                          }
+                        />
+                      ) : (
+                        garage.ownerId || 'Nėra savininko ID'
+                      )}
+                    </td>
+                    <td>
                       <div className={styles.garageImages}>
                         {images.slice(0, 3).map((img, index) => (
                           <img
@@ -324,9 +362,7 @@ export default function AdminDashboard() {
                     </td>
                     <td>
                       {editingGarageId === garage.id ? (
-                        <button onClick={() => handleSaveGarage(garage.id)}>
-                          Išsaugoti
-                        </button>
+                        <button onClick={() => handleSaveGarage(garage.id)}>Išsaugoti</button>
                       ) : (
                         <>
                           <button onClick={() => setEditingGarageId(garage.id)}>

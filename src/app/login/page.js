@@ -82,9 +82,6 @@ export default function Login() {
               <label>
                 <input type="checkbox" /> Prisiminti mane
               </label>
-              <a href="#" className={styles.forgotPasswordLink}>
-                Pamiršai slaptažodį?
-              </a>
             </div>
 
             <button type="submit" className={styles.formButton}>

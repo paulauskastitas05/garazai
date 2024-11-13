@@ -7,8 +7,9 @@ import Footer from '../components/Footer';
 import styles from './Home.module.css';
 import { availableTools } from '../data/tools';
 import { lithuanianCities } from '../data/cities';
-import LiveChat from './LiveChat'; 
-import Link from 'next/link';
+// import LiveChat from './LiveChat'; 
+import Link from 'next/link'; 
+
 
 const customSelectStyles = {
   control: (provided, state) => ({
@@ -184,7 +185,6 @@ export default function Home() {
       </div>
 
       <Footer />
-      <LiveChat />
     </div>
   );
 }

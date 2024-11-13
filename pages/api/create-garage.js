@@ -24,74 +24,66 @@ export default async function handler(req, res) {
 
     form.parse(req, async (err, fields, files) => {
       if (err) {
-        console.error('Klaida nuskaitant formą:', err);
-        return res.status(500).json({ message: 'Klaida nuskaitant formos duomenis', error: err.message });
+        console.error('Error reading form:', err);
+        return res.status(500).json({ message: 'Error reading form data', error: err.message });
       }
 
-      const { name, address, city, tools } = fields;
+      const { name, address, city, tools, ownerId } = fields;
 
-      if (!name || !address || !city || !tools) {
-        console.error('Trūksta privalomų laukelių');
-        return res.status(400).json({ message: 'Pavadinimas, adresas, miestas ir įrankiai yra privalomi.' });
+      if (!name || !address || !city || !tools || !ownerId) {
+        console.error('Missing required fields');
+        return res.status(400).json({ message: 'Name, address, city, tools, and ownerId are required.' });
       }
 
-      let toolList = [];
+      let toolList;
       try {
         toolList = JSON.parse(tools);
       } catch (parseError) {
-        console.error('Klaida nuskaitant įrankius:', parseError);
-        return res.status(400).json({ message: 'Įrankių laukas nėra tinkamas JSON formatas.', error: parseError.message });
-      }
-
-      if (!files || Object.keys(files).length === 0) {
-        console.error('Failai nebuvo įkelti');
-        return res.status(400).json({ message: 'Nėra įkeltų failų' });
+        console.error('Error parsing tools:', parseError);
+        return res.status(400).json({ message: 'Tools field must be valid JSON format.', error: parseError.message });
       }
 
       const uploadedFiles = [];
+      if (files) {
+        try {
+          Object.values(files).forEach((fileArray) => {
+            (Array.isArray(fileArray) ? fileArray : [fileArray]).forEach((file) => {
+              const newFileName = `${Date.now()}_${file.originalFilename}`;
+              const filePath = path.join(uploadDir, newFileName);
 
-      try {
-        Object.values(files).forEach((fileArray) => {
-          fileArray.forEach((file) => {
-            if (!file || !file.filepath) {
-              console.error('Failas neturi nurodyto kelio');
-              return;
-            }
-
-            const newFileName = `${Date.now()}_${file.originalFilename}`;
-            const filePath = path.join(uploadDir, newFileName);
-
-            try {
-              fs.renameSync(file.filepath, filePath);
-              uploadedFiles.push(`/uploads/${newFileName}`);
-            } catch (renameError) {
-              console.error(`Klaida perkeliant failą ${file.originalFilename}:`, renameError);
-            }
+              try {
+                fs.renameSync(file.filepath, filePath);
+                uploadedFiles.push(`/uploads/${newFileName}`);
+              } catch (renameError) {
+                console.error(`Error moving file ${file.originalFilename}:`, renameError);
+              }
+            });
           });
-        });
-      } catch (fileError) {
-        console.error('Klaida tvarkant failų įkėlimą:', fileError);
-        return res.status(500).json({ message: 'Klaida tvarkant failų įkėlimą', error: fileError.message });
+        } catch (fileError) {
+          console.error('Error handling file uploads:', fileError);
+          return res.status(500).json({ message: 'Error handling file uploads', error: fileError.message });
+        }
       }
 
       if (uploadedFiles.length === 0) {
-        return res.status(500).json({ message: 'Nepavyko įkelti jokių failų' });
+        console.warn('No files uploaded');
+        return res.status(500).json({ message: 'Failed to upload any files' });
       }
 
       try {
         const result = await pool.query(
-          'INSERT INTO garages (name, address, city, tools, images) VALUES (?, ?, ?, ?, ?)',
-          [name, address, city, JSON.stringify(toolList), JSON.stringify(uploadedFiles)]
+          'INSERT INTO garages (name, address, city, tools, ownerId, images) VALUES (?, ?, ?, ?, ?, ?)',
+          [name, address, city, JSON.stringify(toolList), ownerId, JSON.stringify(uploadedFiles)]
         );
 
-        console.log('Garažas pridėtas į DB:', result);
-        return res.status(200).json({ message: 'Garažas sėkmingai sukurtas!' });
+        console.log('Garage added to DB:', result);
+        return res.status(200).json({ message: 'Garage created successfully!', garageId: result.insertId });
       } catch (dbError) {
-        console.error('Klaida įrašant garažą į duomenų bazę:', dbError);
-        return res.status(500).json({ message: 'Klaida įrašant garažą į duomenų bazę', error: dbError.message });
+        console.error('Error inserting garage into database:', dbError);
+        return res.status(500).json({ message: 'Error inserting garage into database', error: dbError.message });
       }
     });
   } else {
-    res.status(405).json({ message: 'Metodas neleidžiamas' });
+    res.status(405).json({ message: 'Method not allowed' });
   }
 }

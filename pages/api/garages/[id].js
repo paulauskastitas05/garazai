@@ -5,14 +5,30 @@ export default async function handler(req, res) {
 
   if (req.method === 'GET') {
     try {
-      const [garage] = await pool.query('SELECT * FROM garages WHERE id = ?', [id]);
+      // Join garages and users tables to fetch garage and owner information
+      const [result] = await pool.query(`
+        SELECT 
+          garages.*, 
+          users.name AS ownerName, 
+          users.email AS ownerEmail,
+          users.phone AS ownerPhone
+        FROM 
+          garages 
+        JOIN 
+          users 
+        ON 
+          garages.ownerId = users.id
+        WHERE 
+          garages.id = ?
+      `, [id]);
 
-      if (garage.length === 0) {
+      if (!result || result.length === 0) {
         return res.status(404).json({ message: 'Garažas nerastas.' });
       }
 
-      return res.status(200).json(garage[0]);
+      return res.status(200).json(result[0]);
     } catch (error) {
+      console.error('Error fetching garage data:', error);
       return res.status(500).json({ message: 'Klaida gaunant garažo duomenis.', error: error.message });
     }
   } 
@@ -24,20 +40,7 @@ export default async function handler(req, res) {
     }
 
     try {
-      let toolsList;
-      if (typeof tools === 'string') {
-        try {
-          toolsList = JSON.parse(tools); 
-        } catch (error) {
-          return res.status(400).json({ message: 'Įrankiai nėra tinkamai suformuoti.' });
-        }
-      } else if (Array.isArray(tools)) {
-        toolsList = tools; 
-      } else {
-        return res.status(400).json({ message: 'Netinkama įrankių forma.' });
-      }
-
-      const toolsJSON = JSON.stringify(toolsList);
+      const toolsJSON = JSON.stringify(tools);
 
       const result = await pool.query(
         'UPDATE garages SET name = ?, address = ?, city = ?, tools = ? WHERE id = ?',

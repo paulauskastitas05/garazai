@@ -1,45 +1,54 @@
-
 .profileContainer {
-    margin-top: 80px; 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: calc(100vh - 100px);
-    padding: 20px;
-    background-color: rgba(27, 72, 136, 255);
-    color: white;
-  }
-  
+  margin-top: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 100px);
+  padding: 20px;
+  background-color: rgba(27, 72, 136, 255);
+  font-family: sans-serif;
+  color: white;
+}
 
-  .profileInfo {
-    background-color: white;
-    color: black;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 400px;
-    text-align: left;
-  }
-  
-  .profileInfo p {
-    margin: 10px 0;
-  }
-  
+.profileInfo {
+  background-color: white;
+  color: black;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  text-align: left;
+}
 
-  .logoutButton {
-    margin-top: 20px;
-    padding: 10px 20px;
-    background-color: #ff4444;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .logoutButton:hover {
-    background-color: #cc0000;
-  }
-  
+.profileInfo p {
+  margin: 10px 0;
+}
+
+.phoneField {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.phoneInput {
+  margin-left: 10px;
+  padding: 5px;
+  font-size: 14px;
+}
+
+.editButton, .saveButton {
+  margin-left: 10px;
+  padding: 5px 10px;
+  background-color: #003366;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.editButton:hover, .saveButton:hover {
+  background-color: #002244;
+}

@@ -1,82 +1,102 @@
+/* Main container for the garage page */
 .garageContainer {
-    display: flex;
-    justify-content: space-between;
-    background-color: white;
-    padding: 20px;
-    margin: 20px auto;
-    width: 80%; 
-    max-width: 1200px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-top: 100px;
-  }
-  
-  .garageInfoSection {
-    width: 45%; 
-  }
-  
-  .garageInfo, .ownerInfo {
-    margin-top: 20px;
-  }
-  
-  .ownerInfo {
-    margin-top: 40px;
-    border-top: 2px solid #ccc;
-    padding-top: 20px;
-  }
-  
-  .imageCarousel {
-    width: 50%; 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-  }
-  
-  .imageSection {
-    text-align: center;
-    position: relative;
-    width: 100%;
-  }
-  
-  .garageImage {
-    width: 400px;
-    height: 300px;
-    object-fit: cover;
-    border-radius: 10px;
-  }
-  
-  .arrow {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 40px;
-    color: white;
-    cursor: pointer;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    z-index: 1;
-    background-color: rgba(0, 0, 0, 0.5);
-    padding: 10px;
-    border-radius: 50%;
-  }
-  
-  .leftArrow {
-    left: 10px;
-  }
-  
-  .rightArrow {
-    right: 10px;
-  }
-  
-  .imageSection:hover .arrow {
-    opacity: 1;
-  }
-  
-  .garageImageContainer {
-    position: relative;
-    width: 100%; 
-    display: flex;
-    justify-content: center;
-  }
-  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 120px 0;
+  background-color: rgba(27, 72, 136, 1);
+  min-height: 100vh;
+  margin: 0;
+  width: 100vw;
+}
+
+
+
+/* Main content box with shadow and rounded corners */
+.garageContentBox {
+  display: flex;
+  width: 80%;
+  margin-top: -250px;
+  max-height: 500px;
+  background-color: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+  gap: 40px;
+  color: black;
+  overflow-y: auto;
+  font-family: sans-serif;
+}
+
+/* Garage information section */
+.garageInfoSection {
+  flex: 1;
+  padding-right: 20px;
+  overflow-y: auto;
+}
+
+/* Styling for headings inside the garage info section */
+.garageInfoSection h1,
+.garageInfoSection h2 {
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.ownerInfo {
+  margin-top: 20px;
+  border-top: 1px solid #ccc;
+  padding-top: 15px;
+}
+
+/* Image carousel styling */
+.imageCarousel {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+}
+
+/* Image styling */
+.garageImage {
+  width: 100%;
+  height: auto;
+  max-height: 400px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* Arrow button styling */
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 24px;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  user-select: none;
+}
+
+.leftArrow {
+  left: 10px;
+}
+
+.rightArrow {
+  right: 10px;
+}
+
+/* Garage page global styling */
+.garagePage {
+  margin: -10px;
+  padding: -10px;
+  width: 100vw;
+  height: 100vh;
+  overflow-x: hidden;
+  box-sizing: border-box; /* Ensures padding doesn’t add extra width */
+}

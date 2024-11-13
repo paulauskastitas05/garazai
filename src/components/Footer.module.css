@@ -2,10 +2,11 @@
   background-color: #2D65B3;
   color: white;
   text-align: center;
-  padding: 10px 0;
+  padding: 10px;
   width: 100%;
   font-size: 14px;
   font-family: 'YourPreferredFont', sans-serif;
-  position: relative;
+  position: fixed;
   bottom: 0;
+  left: 0;
 }

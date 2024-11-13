@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Select from 'react-select';
 import Header from '../../components/Header';
@@ -19,6 +19,16 @@ export default function CreateGarage() {
   });
   const [message, setMessage] = useState('');
   const router = useRouter();
+  const [ownerId, setOwnerId] = useState(null);
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user) {
+      setOwnerId(user.id); // Set the ownerId from logged-in user's data
+    } else {
+      router.push('/login'); // Redirect to login if user not found
+    }
+  }, [router]);
 
   const handleInputChange = (e) => {
     setFormData({
@@ -51,6 +61,7 @@ export default function CreateGarage() {
     formDataToSubmit.append('name', formData.name);
     formDataToSubmit.append('address', formData.address);
     formDataToSubmit.append('city', formData.city);
+    formDataToSubmit.append('ownerId', ownerId); // Include ownerId
     formData.images.forEach((file, i) => {
       formDataToSubmit.append(`images_${i}`, file);
     });
@@ -111,6 +122,7 @@ export default function CreateGarage() {
             isMulti
             options={availableTools}
             onChange={handleToolChange}
+            placeholder="Pasirinkite įrankius"
             closeMenuOnSelect={false}
             value={availableTools.filter(tool => formData.tools.includes(tool.value))}
           />

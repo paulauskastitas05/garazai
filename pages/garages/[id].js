@@ -21,7 +21,6 @@ export default function GarageDetails() {
           console.error('Failed to load garage:', error);
         }
       };
-
       fetchGarage();
     }
   }, [id]);
@@ -33,49 +32,56 @@ export default function GarageDetails() {
   const images = JSON.parse(garage.images || '[]');
 
   return (
-    <div style={{ backgroundColor: '#003366', minHeight: '100vh' }}> {/* Blue background */}
+    <div style={{ backgroundColor: 'rgba(27, 72, 136, 1)', minHeight: '100vh' }}>
       <Header />
+      <div className={styles.garagePage}>
       <div className={styles.garageContainer}>
-        <div className={styles.garageInfoSection}>
-          <h1>{garage.name}</h1>
-          <div className={styles.garageInfo}>
-            <p><strong>Adresas:</strong> {garage.address}</p>
-            <p><strong>Miestas:</strong> {garage.city}</p>
-            <p><strong>Įrankiai:</strong> {garage.tools ? JSON.parse(garage.tools).join(', ') : 'Nėra įrankių'}</p>
-          </div>
-          <div className={styles.ownerInfo}>
-            <h2>Savininko informacija</h2>
-            <p><strong>Vardas:</strong> {garage.ownerName || 'Nėra duomenų'}</p>
-            <p><strong>Telefono numeris:</strong> {garage.ownerPhone || 'Nėra duomenų'}</p>
-            <p><strong>El. paštas:</strong> {garage.ownerEmail || 'Nėra duomenų'}</p>
-          </div>
-        </div>
-
-        <div className={styles.imageCarousel}>
-          {images.length > 0 ? (
-            <div className={styles.imageSection}>
-              <span
-                className={`${styles.arrow} ${styles.leftArrow}`}
-                onClick={() => setCurrentImageIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1))}
-              >
-                &#8592;
-              </span>
-              <img
-                src={images[currentImageIndex]}
-                alt={`Garage ${currentImageIndex + 1}`}
-                className={styles.garageImage}
-              />
-              <span
-                className={`${styles.arrow} ${styles.rightArrow}`}
-                onClick={() => setCurrentImageIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1))}
-              >
-                &#8594;
-              </span>
+        <div className={styles.garageContentBox}>
+          {/* Left Side: Garage Info */}
+          <div className={styles.garageInfoSection}>
+            <h1>{garage.name}</h1>
+            <div className={styles.garageInfo}>
+              <p><strong>Adresas:</strong> {garage.address}</p>
+              <p><strong>Miestas:</strong> {garage.city}</p>
+              <p><strong>Įrankiai:</strong> {garage.tools ? JSON.parse(garage.tools).join(', ') : 'Nėra įrankių'}</p>
             </div>
-          ) : (
-            <p>No images available</p>
-          )}
+            {/* Garage Owner Section */}
+            <div className={styles.ownerInfo}>
+              <h2>Savininko informacija</h2>
+              <p><strong>Vardas:</strong> {garage.ownerName || 'Nėra duomenų'}</p>
+              <p><strong>Telefono numeris:</strong> {garage.ownerPhone || 'Nėra duomenų'}</p> {/* New line for phone */}
+              <p><strong>El. paštas:</strong> {garage.ownerEmail || 'Nėra duomenų'}</p>
+            </div>
+          </div>
+
+          {/* Right Side: Image Carousel */}
+          <div className={styles.imageCarousel}>
+            {images.length > 0 ? (
+              <div className={styles.imageSection}>
+                <span
+                  className={`${styles.arrow} ${styles.leftArrow}`}
+                  onClick={() => setCurrentImageIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1))}
+                >
+                  &#8592;
+                </span>
+                <img
+                  src={images[currentImageIndex]}
+                  alt={`Garage ${currentImageIndex + 1}`}
+                  className={styles.garageImage}
+                />
+                <span
+                  className={`${styles.arrow} ${styles.rightArrow}`}
+                  onClick={() => setCurrentImageIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1))}
+                >
+                  &#8594;
+                </span>
+              </div>
+            ) : (
+              <p>No images available</p>
+            )}
+          </div>
         </div>
+      </div>
       </div>
       <Footer />
     </div>

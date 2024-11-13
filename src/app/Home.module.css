@@ -4,10 +4,9 @@
   align-items: center;
   margin-top: 75px;
   background-color: rgba(27, 72, 136, 255);
-  padding: px;
   color: white;
-  min-height: calc(100vh - 100px);
-  padding-bottom: 80px;
+  min-height: calc(100vh - 1px);
+  font-family: 'YourFontFamily', sans-serif;
 }
 
 .header {
@@ -156,9 +155,22 @@
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  
 }
 
 .modalImage {
   max-width: 80%;
   max-height: 80%;
+}
+
+.garageName, .garageName a {
+  color: #2D65B3;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none !important; 
+  transition: color 0.3s ease;
+}
+
+.garageName:hover, .garageName a:hover {
+  color: #5A8FD7; 
 }
