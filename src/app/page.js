@@ -164,7 +164,6 @@ export default function Home() {
         </div>
 
         <div className={styles.garageInfo}>
-          {/* Wrap garage.name in a Link component */}
           <Link href={`/garages/${garage.id}`}>
             <h3 className={styles.garageName} style={{ cursor: 'pointer' }}>{garage.name}</h3>
           </Link>

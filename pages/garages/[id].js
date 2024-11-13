@@ -37,7 +37,7 @@ export default function GarageDetails() {
       <div className={styles.garagePage}>
       <div className={styles.garageContainer}>
         <div className={styles.garageContentBox}>
-          {/* Left Side: Garage Info */}
+
           <div className={styles.garageInfoSection}>
             <h1>{garage.name}</h1>
             <div className={styles.garageInfo}>
@@ -45,7 +45,7 @@ export default function GarageDetails() {
               <p><strong>Miestas:</strong> {garage.city}</p>
               <p><strong>Įrankiai:</strong> {garage.tools ? JSON.parse(garage.tools).join(', ') : 'Nėra įrankių'}</p>
             </div>
-            {/* Garage Owner Section */}
+
             <div className={styles.ownerInfo}>
               <h2>Savininko informacija</h2>
               <p><strong>Vardas:</strong> {garage.ownerName || 'Nėra duomenų'}</p>
@@ -54,7 +54,7 @@ export default function GarageDetails() {
             </div>
           </div>
 
-          {/* Right Side: Image Carousel */}
+
           <div className={styles.imageCarousel}>
             {images.length > 0 ? (
               <div className={styles.imageSection}>

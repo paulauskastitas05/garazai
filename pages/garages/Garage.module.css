@@ -1,4 +1,3 @@
-/* Main container for the garage page */
 .garageContainer {
   display: flex;
   justify-content: center;
@@ -10,9 +9,6 @@
   width: 100vw;
 }
 
-
-
-/* Main content box with shadow and rounded corners */
 .garageContentBox {
   display: flex;
   width: 80%;
@@ -28,14 +24,12 @@
   font-family: sans-serif;
 }
 
-/* Garage information section */
 .garageInfoSection {
   flex: 1;
   padding-right: 20px;
   overflow-y: auto;
 }
 
-/* Styling for headings inside the garage info section */
 .garageInfoSection h1,
 .garageInfoSection h2 {
   font-weight: bold;
@@ -49,7 +43,6 @@
   padding-top: 15px;
 }
 
-/* Image carousel styling */
 .imageCarousel {
   flex: 1;
   display: flex;
@@ -60,7 +53,6 @@
   max-width: 500px;
 }
 
-/* Image styling */
 .garageImage {
   width: 100%;
   height: auto;
@@ -69,7 +61,6 @@
   border-radius: 8px;
 }
 
-/* Arrow button styling */
 .arrow {
   position: absolute;
   top: 50%;
@@ -91,12 +82,11 @@
   right: 10px;
 }
 
-/* Garage page global styling */
 .garagePage {
   margin: -10px;
   padding: -10px;
   width: 100vw;
   height: 100vh;
   overflow-x: hidden;
-  box-sizing: border-box; /* Ensures padding doesn’t add extra width */
+  box-sizing: border-box;
 }

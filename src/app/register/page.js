@@ -14,9 +14,8 @@ export default function Register() {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    // Only allow numbers in the phone input
     if (name === 'phone') {
-      const formattedValue = value.replace(/\D/g, ''); // Remove non-numeric characters
+      const formattedValue = value.replace(/\D/g, ''); 
       setFormData((prev) => ({ ...prev, phone: formattedValue }));
     } else {
       setFormData((prev) => ({ ...prev, [name]: value }));

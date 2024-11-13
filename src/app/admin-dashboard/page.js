@@ -81,7 +81,7 @@ export default function AdminDashboard() {
           address: garage.address,
           city: garage.city,
           tools: garage.tools,
-          ownerId: garage.ownerId, // Include ownerId here
+          ownerId: garage.ownerId, 
         }),
       });
       if (response.ok) {
@@ -120,10 +120,7 @@ export default function AdminDashboard() {
 
       <div className={styles.adminContainer}>
         <h1 className={styles.headingPrimary}>Admino puslapis</h1>
-
         {message && <p className={styles.errorMessage}>{message}</p>}
-
-        {/* Users Table */}
         <h2 className={styles.headingSecondary}>Vartotojai</h2>
         <table className={styles.table}>
           <thead>
@@ -213,7 +210,6 @@ export default function AdminDashboard() {
           </tbody>
         </table>
 
-        {/* Garages Table */}
         <h2 className={styles.headingSecondary}>Garažai</h2>
         <table className={styles.table}>
           <thead>

@@ -5,20 +5,16 @@ export default async function handler(req, res) {
     const { email, password } = req.body;
 
     try {
-      // Fetch the user from the database
       const [user] = await pool.query('SELECT * FROM users WHERE email = ?', [email]);
       
-      // If the user does not exist, return a 401 error
       if (user.length === 0) {
         return res.status(401).json({ message: 'Vartotojas nerastas' });
       }
 
-      // Check if the plain text password matches the one in the database
       if (user[0].password !== password) {
         return res.status(401).json({ message: 'Neteisingas slaptažodis' });
       }
 
-      // Return user data if authentication is successful
       return res.status(200).json({
         id: user[0].id,
         name: user[0].name,

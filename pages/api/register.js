@@ -4,20 +4,18 @@ export default async function handler(req, res) {
   if (req.method === 'POST') {
     const { name, email, password, phone } = req.body;
 
-    // Validate phone input (only numbers and optional "+" prefix)
+
     const phoneRegex = /^\+?[0-9]{7,15}$/;
     if (!phoneRegex.test(phone)) {
       return res.status(400).json({ message: 'Neteisingas telefono numerio formatas' });
     }
 
     try {
-      // Check if the user already exists
       const [existingUser] = await pool.query('SELECT * FROM users WHERE email = ?', [email]);
       if (existingUser.length > 0) {
         return res.status(400).json({ message: 'Vartotojas jau egzistuoja' });
       }
 
-      // Insert the new user with the phone number
       await pool.query(
         'INSERT INTO users (name, email, password, role, phone) VALUES (?, ?, ?, ?, ?)',
         [name, email, password, 'user', phone]
