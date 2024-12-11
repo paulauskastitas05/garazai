@@ -2,29 +2,23 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Header from '../../components/Header'; 
-import Footer from '../../components/Footer'; 
-import styles from '../login/LoginRegister.module.css'; 
+import Header from '../../components/Header';
+import Footer from '../../components/Footer';
+import styles from '../login/LoginRegister.module.css';
 
 export default function Register() {
-  const [formData, setFormData] = useState({ name: '', email: '', password: '', phone: '' });
+  const [formData, setFormData] = useState({ name: '', email: '', password: '' });
   const [message, setMessage] = useState('');
   const router = useRouter();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-
-    if (name === 'phone') {
-      const formattedValue = value.replace(/\D/g, ''); 
-      setFormData((prev) => ({ ...prev, phone: formattedValue }));
-    } else {
-      setFormData((prev) => ({ ...prev, [name]: value }));
-    }
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setMessage(''); 
+    setMessage('');
 
     try {
       const response = await fetch('/api/register', {
@@ -37,8 +31,8 @@ export default function Register() {
 
       const data = await response.json();
       if (response.ok) {
-        localStorage.setItem('user', JSON.stringify(data)); 
-        router.push('/'); 
+        localStorage.setItem('user', JSON.stringify(data));
+        router.push('/');
       } else {
         setMessage(data.message);
       }
@@ -53,7 +47,7 @@ export default function Register() {
 
       <div className={styles.formContainer}>
         <div className={styles.formCard}>
-          <h1 className={styles.formHeading}>Sukurti paskyrą</h1>
+          <h1 className={styles.formHeading}>Create an Account</h1>
           <form className={styles.form} onSubmit={handleSubmit}>
             <div className={styles.formInput}>
               <span className={styles.formInputIcon}>
@@ -62,7 +56,7 @@ export default function Register() {
               <input
                 type="text"
                 name="name"
-                placeholder="Įveskite savo vardą"
+                placeholder="Enter your name"
                 value={formData.name}
                 onChange={handleChange}
                 required
@@ -75,7 +69,7 @@ export default function Register() {
               <input
                 type="email"
                 name="email"
-                placeholder="Įveskite savo email"
+                placeholder="Enter your email"
                 value={formData.email}
                 onChange={handleChange}
                 required
@@ -88,43 +82,30 @@ export default function Register() {
               <input
                 type="password"
                 name="password"
-                placeholder="Įveskite savo slaptažodį"
+                placeholder="Enter your password"
                 value={formData.password}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <div className={styles.formInput}>
-              <span className={styles.formInputIcon}>
-                <i className="fa fa-phone"></i>
-              </span>
-              <input
-                type="text"
-                name="phone"
-                placeholder="Įveskite savo telefono numerį"
-                value={formData.phone}
                 onChange={handleChange}
                 required
               />
             </div>
 
             <button type="submit" className={styles.formButton}>
-              Registruotis
+              Register
             </button>
           </form>
 
           {message && <p className={styles.errorMessage}>{message}</p>}
 
           <p className={styles.centeredText}>
-            Jau turi paskyrą?{' '}
+            Already have an account?{' '}
             <a href="/login" className={styles.formLink}>
-              Prisijungti čia
+              Log in here
             </a>
           </p>
         </div>
       </div>
 
-      <Footer /> 
+      <Footer />
     </div>
   );
 }

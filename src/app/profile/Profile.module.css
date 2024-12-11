@@ -26,29 +26,18 @@
   margin: 10px 0;
 }
 
-.phoneField {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.phoneInput {
-  margin-left: 10px;
-  padding: 5px;
-  font-size: 14px;
-}
-
-.editButton, .saveButton {
-  margin-left: 10px;
-  padding: 5px 10px;
-  background-color: #003366;
+.logoutButton {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #4c6ef5;
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
+  font-size: 16px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
-.editButton:hover, .saveButton:hover {
-  background-color: #002244;
+.logoutButton:hover {
+  background-color: #364fc7;
 }

@@ -5,33 +5,33 @@ export default async function handler(req, res) {
 
   if (req.method === 'GET') {
     try {
-      const [user] = await pool.query('SELECT id, name, email, phone, role FROM users WHERE id = ?', [id]);
+      const [user] = await pool.query('SELECT id, name, email, role FROM users WHERE id = ?', [id]);
 
       if (!user || user.length === 0) {
-        return res.status(404).json({ message: 'Vartotojas nerastas' });
+        return res.status(404).json({ message: 'User not found' });
       }
 
       return res.status(200).json(user[0]);
     } catch (error) {
-      console.error('Klaida gaunant vartotojo duomenis:', error);
-      return res.status(500).json({ message: 'Nepavyko gauti vartotojo duomenų' });
+      console.error('Error fetching user data:', error);
+      return res.status(500).json({ message: 'Failed to fetch user data' });
     }
   } else if (req.method === 'PUT') {
-    const { name, phone, role } = req.body;
+    const { name, role } = req.body;
 
     try {
-      const result = await pool.query('UPDATE users SET name = ?, phone = ?, role = ? WHERE id = ?', [name, phone, role, id]);
+      const result = await pool.query('UPDATE users SET name = ?, role = ? WHERE id = ?', [name, role, id]);
 
       if (result.affectedRows === 0) {
-        return res.status(404).json({ message: 'Vartotojas nerastas' });
+        return res.status(404).json({ message: 'User not found' });
       }
 
-      return res.status(200).json({ message: 'Vartotojas atnaujintas sėkmingai' });
+      return res.status(200).json({ message: 'User successfully updated' });
     } catch (error) {
-      console.error('Nepavyko atnaujinti vartotojo:', error);
-      return res.status(500).json({ message: 'Nepavyko atnaujinti vartotojo' });
+      console.error('Failed to update user:', error);
+      return res.status(500).json({ message: 'Failed to update user' });
     }
   } else {
-    res.status(405).json({ message: 'Metodas negalimas' });
+    res.status(405).json({ message: 'Method not allowed' });
   }
 }

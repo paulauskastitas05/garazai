@@ -36,8 +36,8 @@ export default function Header() {
             {user.role === 'admin' && (
               <Link href="/admin-dashboard">Admin</Link>
             )}
-            {user.role === 'renter' && (
-              <Link href="/create-garage">Garažų kūrimas</Link>
+            {user.role === 'user' && (
+              <Link href="/create-post">Naujas post</Link>
             )}
 
             <button className={styles.logoutButton} onClick={handleLogout}>

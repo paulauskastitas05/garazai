@@ -1,0 +1,175 @@
+.postContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 120px 0;
+  background-color: rgba(27, 72, 136, 1);
+  min-height: 100vh;
+  margin: 0;
+  width: 100vw;
+}
+
+.postContentBox {
+  display: flex;
+  width: 80%;
+  margin-top: -250px;
+  max-height: 500px;
+  background-color: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+  gap: 40px;
+  color: black;
+  overflow-y: auto;
+  font-family: sans-serif;
+}
+
+.postInfoSection {
+  flex: 1;
+  padding-right: 20px;
+  overflow-y: auto;
+}
+
+.postInfoSection h1,
+.postInfoSection h2 {
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.authorInfo {
+  margin-top: 20px;
+  border-top: 1px solid #ccc;
+  padding-top: 15px;
+}
+
+.imageCarousel {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+}
+
+.postImage {
+  width: 100%;
+  height: auto;
+  max-height: 400px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 24px;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  user-select: none;
+}
+
+.leftArrow {
+  left: 10px;
+}
+
+.rightArrow {
+  right: 10px;
+}
+
+.postPage {
+  margin: -10px;
+  padding: -10px;
+  width: 100vw;
+  height: 100vh;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+.likeSection {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.likeButton {
+  padding: 10px 20px;
+  background-color: #4c6ef5;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.likeButton:hover {
+  background-color: #364fc7;
+}
+
+.likeButton:focus {
+  outline: none;
+}
+
+.likeSection p {
+  margin: 0;
+  font-size: 16px;
+  color: rgb(0, 0, 0);
+}
+
+.actions {
+  margin-top: 20px;
+}
+
+.editButton,
+.saveButton,
+.deleteButton {
+  margin-right: 10px;
+  padding: 10px 20px;
+  background-color: #003366;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.editButton:hover {
+  background-color: #002244;
+}
+
+.saveButton {
+  background-color: #4CAF50;
+}
+
+.saveButton:hover {
+  background-color: #45A049;
+}
+
+.deleteButton {
+  background-color: #FF4444;
+}
+
+.deleteButton:hover {
+  background-color: #CC0000;
+}
+
+.input,
+.select,
+.textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.textarea {
+  min-height: 100px;
+  resize: vertical;
+}

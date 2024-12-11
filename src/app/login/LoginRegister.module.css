@@ -10,7 +10,6 @@
   font-family: sans-serif;
 }
 
-
 .formCard {
   background-color: white;
   border-radius: 16px;
@@ -28,13 +27,11 @@
   font-weight: bold;
 }
 
-
 .formInput {
   position: relative;
   margin-bottom: 20px;
   width: 100%;
 }
-
 
 .formInput input {
   width: 100%;
@@ -45,7 +42,6 @@
   background-color: #f9f9f9;
   color: #333;
 }
-
 
 .formInput input::placeholder {
   color: #aaa; 
@@ -76,12 +72,10 @@
   background-color: #364fc7;
 }
 
-
 .centeredText {
   text-align: center;
   margin-top: 20px;
   color: #333;
-
 }
 
 .formLink {
@@ -93,12 +87,10 @@
   text-decoration: underline;
 }
 
-
 .errorMessage {
   color: #ff4444;
   margin-top: 10px;
 }
-
 
 .rememberMeSection {
   display: flex;
